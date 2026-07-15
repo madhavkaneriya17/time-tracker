@@ -236,6 +236,25 @@
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
         }
 
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-edit:hover {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+        }
+
         .btn-delete {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -462,6 +481,18 @@
             renderProjects();
         }
 
+        function editProject(id) {
+            const project = tracker.projects.find(p => p.id === id);
+            if (project) {
+                const newName = prompt("Edit Task Name:", project.name);
+                if (newName !== null && newName.trim() !== "") {
+                    project.name = newName.trim();
+                    saveData();
+                    renderProjects();
+                }
+            }
+        }
+
         function deleteProject(id) {
             if (confirm("Are you sure you want to delete this log?")) {
                 tracker.deleteProject(id);
@@ -502,6 +533,12 @@
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="margin-right:4px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 Play
                             `}
+                        </button>
+                        <button class="btn-edit" onclick="editProject(${project.id})" aria-label="Edit Project">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
                         </button>
                         <button class="btn-delete" onclick="deleteProject(${project.id})" aria-label="Delete Project">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
